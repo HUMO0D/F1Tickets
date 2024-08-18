@@ -1,0 +1,88 @@
+﻿.CircuitImg {
+    width: 700px;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.Circ&Date {
+    font-size: 30px;
+}
+.trackname {
+    font-size: 48px;
+    font-weight: bolder;
+    z-index: 2;
+    position: absolute;
+    left: 26.5%;
+    mix-blend-mode: screen;
+    text-align: center;
+    background-color: white;
+    width: 750px;
+    margin: 20px auto;
+}
+table {
+    width: 100%;
+    margin-top: 20px;
+}
+table, td, th {
+    border: 1px solid;
+    font-size: 20px;
+
+}
+
+.Orderbtn {
+    align-items: center;
+    background-color: #0A66C2;
+    border: 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 30px;
+    width: 70px;
+    touch-action: manipulation;
+    transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    vertical-align: middle;
+}
+
+    .Orderbtn:hover,
+    .Orderbtn:focus {
+        background-color: #16437E;
+        color: #ffffff;
+    }
+
+
+/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/* Container for track info to scope styles */
+#trackInfoContainer {
+    padding-top: 1rem;
+}
+
+    /* Align first image with text */
+    #trackInfoContainer .f1-c-image {
+        width: 4rem;
+        height: auto;
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 20px;
+    }
+    #trackInfoContainer .max-w-14 {
+        border: solid 1px black;
+    }
+
+    #trackInfoContainer .f1-heading {
+        display: inline-block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-left: 1rem;
+        vertical-align: middle;
+    }
+
+    #trackInfoContainer .w-full {
+        width: 100%;
+        max-width: 700px;
+        border-radius: 10px;
+    }

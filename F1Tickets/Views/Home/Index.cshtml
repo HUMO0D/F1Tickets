@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/index.css" />
+}
+
+<div class="text-center">
+	<h2 style="font-weight:bolder;" class="display-4">F1 Schedule 2024</h2>
+	<div class="row">
+		@foreach (var race in Model)
+		{
+			<div class="col-md-4 col-sm-6 col-xs-12">
+				<div class="card">
+					<div 
+						style="
+							background-image: url(@race.PhotoPath);
+						"
+						class="cover item-a">
+						@{
+							string countryName = race.Country;
+							if (countryName.EndsWith("A", StringComparison.OrdinalIgnoreCase))
+							{
+								countryName += "N";
+							}
+							if (countryName.EndsWith("PAN", StringComparison.OrdinalIgnoreCase))
+							{
+								countryName += "ESE";
+							}
+						}
+						<h1>@countryName<br>GRAND PRIX</h1>
+						<span class="price"> @race.Date.ToString("dd/MM/yyyy") <br />From 100 OMR</span>
+						<div class="card-back">
+						<a asp-area="" asp-controller="Tickets" asp-action="TicketsView" asp-route-id="@race.Id">
+							View Available Tickets
+						</a>
+						@if (User.IsInRole("Admin"))
+						{
+							<form asp-area="" asp-controller="AddRace" asp-action="DeleteRace" method="post">
+								<input type="hidden" name="id" value="@race.Id" />
+								<button type="submit" onclick="return confirm('Are you sure you want to delete @countryName GP?');">Delete Race</button>
+							</form>
+						}
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "F1 Results";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/F1ResultsViewStyle.css" />
+}
+
+<h1>F1 Results</h1>
+
+<form id="raceResultsForm" class="results">
+    <h2>Get Race Results</h2>
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" required />
+    <label for="round">Round:</label>
+    <input type="number" id="round" name="round" required />
+    <button type="submit">Get Race Results</button>
+</form>
+
+<div id="raceResultsContainer"></div>
+
+<form id="fastestLapForm" class="results">
+    <h2>Get Fastest Lap</h2>
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" required />
+    <label for="round">Round:</label>
+    <input type="number" id="round" name="round" required />
+    <label for="fastest">Fastest (1 for fastest lap, 2 for second fastest, etc.):</label>
+    <input type="number" id="fastest" name="fastest" required />
+    <button type="submit">Get Fastest Lap</button>
+</form>
+
+<div id="fastestLapContainer"></div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#raceResultsForm').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("GetRaceResults", "F1Results")',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            var resultsHtml = '<h3>Race Results</h3>';
+                            resultsHtml += '<p><strong>Race:</strong> ' + response.data.raceName + '</p>';
+                            resultsHtml += '<p><strong>Circuit:</strong> ' + response.data.circuitName + '</p>';
+                            resultsHtml += '<p><strong>Date:</strong> ' + response.data.raceDate + '</p>';
+                            resultsHtml += '<h4>Results:</h4>';
+                            resultsHtml += '<table><thead><tr><th>Position</th><th>Driver</th><th>Constructor</th><th>Time</th><th>Points</th></tr></thead><tbody>';
+                            $.each(response.data.results, function (index, result) {
+                                resultsHtml += '<tr>';
+                                resultsHtml += '<td>' + result.position + '</td>';
+                                resultsHtml += '<td>' + result.driver + '</td>';
+                                resultsHtml += '<td>' + result.constructor + '</td>';
+                                resultsHtml += '<td>' + result.time + '</td>';
+                                resultsHtml += '<td>' + result.points + '</td>';
+                                resultsHtml += '</tr>';
+                            });
+                            resultsHtml += '</tbody></table>';
+                            $('#raceResultsContainer').html(resultsHtml);
+                        } else {
+                            $('#raceResultsContainer').html('<p>Error: ' + response.message + '</p>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        $('#raceResultsContainer').html('<p>Error occurred while fetching race results.</p>');
+                    }
+                });
+            });
+
+            $('#fastestLapForm').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("GetFastestLap", "F1Results")',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            var fastestLapHtml = '<h3>Fastest Lap</h3>';
+                            fastestLapHtml += '<p><strong>Race:</strong> ' + response.data.raceName + '</p>';
+                            fastestLapHtml += '<p><strong>Circuit:</strong> ' + response.data.circuitName + '</p>';
+                            fastestLapHtml += '<p><strong>Driver:</strong> ' + response.data.driverName + '</p>';
+                            fastestLapHtml += '<p><strong>Fastest Lap Time:</strong> ' + response.data.fastestLapTime + '</p>';
+                            $('#fastestLapContainer').html(fastestLapHtml);
+                        } else {
+                            $('#fastestLapContainer').html('<p>Error: ' + response.message + '</p>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        $('#fastestLapContainer').html('<p>Error occurred while fetching fastest lap.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+}

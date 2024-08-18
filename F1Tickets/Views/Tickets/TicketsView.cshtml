@@ -1,0 +1,72 @@
+﻿@model F1Tickets.Models.Race
+
+
+@{
+	ViewData["Title"] = "Tickets";
+
+	string countryName = Model.Country;
+	string ImgPath = Model.PhotoPath;
+	string Circuit = Model.Circuit;
+	var Date = Model.Date;
+	int RaceId = Model.Id;
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/TicketsView.css" />
+}
+
+<div class="text-center">
+	<h2 class="trackname">Tickets for @countryName GP</h2>
+	<img class="CircuitImg" src="@ImgPath" />
+	<h1 class="Circ&Date">Circuit: @Circuit</h1>
+	<h1 class="Circ&Date">Date: @Date.ToString("dd/MM/yyyy")</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Ticket Type ID</th>
+				<th>Price</th>
+				<th>Available</th>
+				<th>Order</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var ticketType in ViewBag.TicketTypes)
+			{
+				var availableSeats = 0;
+				switch (ticketType.Type)
+				{
+					case "Race Day":
+						availableSeats = Model.AvailableRaceDaySeats;
+						break;
+					case "Full Weekend":
+						availableSeats = Model.AvailableFullWeekendSeats;
+						break;
+					case "F1 PADDOCK CLUB":
+						availableSeats = Model.AvailableF1PADDOCKCLUBSeats;
+						break;
+					default:
+						break;
+				}
+				<tr>
+					<td>@ticketType.Type</td>
+					<td>@ticketType.Price.ToString("F0")</td>
+					<td>@availableSeats</td>
+					<td>
+						<form asp-controller="Orders" asp-action="CreateOrder" method="post" style="display:inline;">
+							<input type="hidden" name="RaceId" value="@RaceId" />
+							<input type="hidden" name="TicketTypeId" value="@ticketType.Id" />
+							<input type="submit" class="Orderbtn" value="Order" />
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<br>
+	<h1>Circuit Information:</h1>
+	<div id="trackInfoContainer">
+		@Html.Raw(ViewBag.TrackInfoHtml)
+	</div>
+</div>

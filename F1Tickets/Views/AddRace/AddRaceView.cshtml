@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Add Race";
+}
+@model F1Tickets.Dtos.RaceDto
+
+    <h1>Add Race</h1>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Country" class="control-label">Country</label>
+            <input asp-for="Country" required class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Circuit" class="control-label">Circuit</label>
+            <input asp-for="Circuit" required class="form-control" />
+            <span asp-validation-for="Circuit" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Date" class="control-label">Date</label>
+            <input asp-for="Date" type="date" required class="form-control" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AvailableRaceDaySeats" class="control-label">Available Race Day Seats</label>
+            <input asp-for="AvailableRaceDaySeats" required class="form-control" />
+            <span asp-validation-for="AvailableRaceDaySeats" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AvailableFullWeekendSeats" class="control-label">Available Full Weekend Seats</label>
+            <input asp-for="AvailableFullWeekendSeats" required class="form-control" />
+            <span asp-validation-for="AvailableFullWeekendSeats" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AvailableF1PADDOCKCLUBSeats" class="control-label">Available F1 PADDOCK CLUB Seats</label>
+            <input asp-for="AvailableF1PADDOCKCLUBSeats" required class="form-control" />
+            <span asp-validation-for="AvailableF1PADDOCKCLUBSeats" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Photo" class="control-label">Photo</label>
+            <input asp-for="Photo" type="file" class="form-control" />
+            <span asp-validation-for="Photo" required class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
